@@ -1,0 +1,11 @@
+.env
+node_modules
+package-lock.json
+apidoc
+yarn.lock
+uploads/
+'uploads/
+temp/
+'temp/
+.idea/
+.vscode

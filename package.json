@@ -1,0 +1,16 @@
+{
+  "name": "consumer-producer-test",
+  "version": "1.0.0",
+  "description": "kafka test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Félix",
+  "license": "MIT",
+  "dependencies": {
+    "kafkajs": "^1.15.0",
+    "nodemon": "^2.0.15"
+  }
+}
