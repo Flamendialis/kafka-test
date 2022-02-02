@@ -4,13 +4,20 @@
   "description": "kafka test",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "(trap 'kill 0' SIGINT; npm run start:producer & npm run start:consumer & npm run start:stream)",
+    "start:producer": "nodemon index.js",
+    "start:consumer": "nodemon consumer.js",
+    "start:stream": "nodemon stream-handler.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Félix",
   "license": "MIT",
   "dependencies": {
+    "concurrently": "^7.0.0",
+    "kafka-streams": "^5.0.0",
     "kafkajs": "^1.15.0",
+    "kafkajs-snappy": "^1.1.0",
+    "node-rdkafka": "^2.12.0",
     "nodemon": "^2.0.15"
   }
 }

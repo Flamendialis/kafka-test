@@ -1,34 +1,29 @@
-const { Kafka } = require("kafkajs");
-
-console.log("Kafka test");
-
-const kafka = new Kafka({
-  clientId: "my-app",
-  brokers: ["localhost:9092"],
-});
-
-const producer = kafka.producer();
-const consumer = kafka.consumer({ groupId: "Litebox-test-group" });
+const kafka = require("./kafka");
 
 (async () => {
-  await consumer.connect();
-  await consumer.subscribe({ topic: "test-topic", fromBeginning: true });
-  await consumer.run({
-    eachMessage: async ({ topic, partition, message }) => {
-      console.log("MENSAJE :", {
-        value: message.value.toString(),
-        message,
-        topic: topic,
-        partition,
-      });
-    },
-  });
+  const producer = kafka.producer();
 
-  await producer.connect();
-  await producer.send({
-    topic: "test-topic",
-    messages: [{ value: "MENSAJE DE PRUEBA 4!" }],
-  });
-
-  await producer.disconnect();
+  try {
+    await producer.connect();
+    await producer.send({
+      topic: "test-raw-data",
+      messages: [
+        {
+          value: JSON.stringify({
+            name: "NUEVO MENSAJE DE PRUEBA 100",
+            time: new Date().getMilliseconds(),
+          }),
+        },
+        {
+          value: JSON.stringify({
+            name: "NUEVO MENSAJE DE PRUEBA 200",
+            time: new Date().getMilliseconds(),
+          }),
+        },
+      ],
+    });
+    await producer.disconnect();
+  } catch (e) {
+    console.log(e);
+  }
 })();
